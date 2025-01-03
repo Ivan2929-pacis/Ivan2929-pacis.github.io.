@@ -16,7 +16,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
 
         h1 {
@@ -60,25 +59,13 @@
             transform: scale(1.1);
         }
 
-        h2 {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            font-weight: normal;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px #fff, 0 0 10px #ff7a18, 0 0 15px #ff7a18; }
-            50% { box-shadow: 0 0 10px #fff, 0 0 20px #ff7a18, 0 0 30px #ff7a18; }
-            100% { box-shadow: 0 0 5px #fff, 0 0 10px #ff7a18, 0 0 15px #ff7a18; }
-        }
-
-        /* Cute anime character styling */
+        /* Simple anime character */
         .anime-character {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
+            width: 100px;
             animation: floatUp 3s ease-in-out infinite;
         }
 
@@ -88,22 +75,31 @@
             100% { transform: translateY(0) translateX(-50%); }
         }
 
-        .anime-character img {
-            width: 100%;
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #fff, 0 0 10px #ff7a18, 0 0 15px #ff7a18; }
+            50% { box-shadow: 0 0 10px #fff, 0 0 20px #ff7a18, 0 0 30px #ff7a18; }
+            100% { box-shadow: 0 0 5px #fff, 0 0 10px #ff7a18, 0 0 15px #ff7a18; }
         }
 
+        /* Message Style */
+        #message {
+            font-size: 1.5rem;
+            color: #ffeb3b;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Crush kita, crush mo rin ba ako?</h1>
     <button onclick="recordAnswer('Yes')" id="yesButton">Yes</button>
-    <button id="noButton" onmouseover="moveNoButton()" onclick="recordAnswer('No')">No</button>
-
-    <h2 id="response" style="margin-top: 20px; display: none;"></h2>
+    <button id="noButton" onclick="pressNoButton()" onmouseover="moveNoButton()">No</button>
 
     <div class="anime-character">
         <img src="https://www.pngkit.com/png/full/888-8886971_cute-anime-girl-png-pic-cute-anime-character.png" alt="Cute Anime Character" />
     </div>
+
+    <div id="message">Press Yessss!</div>
 
     <script>
         function moveNoButton() {
@@ -114,13 +110,18 @@
             noButton.style.top = `${y}px`;
         }
 
-        function recordAnswer(answer) {
-            const response = document.getElementById('response');
-            response.style.display = 'block';
-            response.textContent = `You answered: ${answer}`;
+        function pressNoButton() {
+            // Show the "Press Yessss!" message when No is clicked
+            document.getElementById('message').style.display = 'block';
+        }
 
-            // Optional: Save to local storage for future reference
-            localStorage.setItem('crushAnswer', answer);
+        function recordAnswer(answer) {
+            if (answer === 'No') {
+                // Prevent recording "No" answer
+                alert("You can't press No!");
+            } else {
+                alert(`You answered: ${answer}`);
+            }
         }
     </script>
 </body>
